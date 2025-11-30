@@ -1,7 +1,7 @@
 # Machine Learning Exercises
 Cool notebooks for machine learning!
 
-Link of datasets:
+Link to datasets:
 
 - [HW1](https://www.kaggle.com/datasets/larsen0966/student-performance-data-set)
 
@@ -10,7 +10,7 @@ Link of datasets:
 
 Things that I have learned:
 
-- There is no necessary to balance categorical features, (I made a mistake in HW1, HW2).
+- There is no necessity to balance categorical features, (I made a mistake in HW1, HW2).
 
 
 
