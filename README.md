@@ -11,7 +11,7 @@ Link to datasets:
 Things that I have learned:
 
 - There is no necessity to balance categorical features, (I made a mistake in HW1, HW2).
-
+- Your target variable doesn't need to be normal (See [this](https://florianwilhelm.info/2020/05/honey_i_shrunk_the_target_variable/))
 
 
 
