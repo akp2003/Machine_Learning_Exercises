@@ -51,12 +51,7 @@ class ShortestPathProblem(SearchProblem):
             (actionToReachSuccessor: str, successorState: State, cost: float)
         """
         # BEGIN_YOUR_CODE (our solution is 7 lines of code, but don't worry if you deviate from this)
-        res = []
-
-        for neighbor, distance in self.cityMap.distances[state.location].items():
-            res.append((neighbor, State(location=neighbor), distance))
-
-        return res
+        return [(neighbor, State(location=neighbor), distance) for neighbor, distance in self.cityMap.distances[state.location].items()]
         # END_YOUR_CODE
 
 
@@ -115,23 +110,31 @@ class WaypointsShortestPathProblem(SearchProblem):
 
     def startState(self) -> State:
         # BEGIN_YOUR_CODE (our solution is 6 lines of code, but don't worry if you deviate from this)
-        raise Exception("Not implemented yet")
+        mem = [(self.waypointTags[i] in self.cityMap.tags[self.startLocation]) for i in range(len(self.waypointTags))]
+        # mem is the beginning memory
+        # True means reached and False means that has not reached the waypoint.
+        return State(self.startLocation, tuple(mem))
         # END_YOUR_CODE
 
     def isEnd(self, state: State) -> bool:
         # BEGIN_YOUR_CODE (our solution is 5 lines of code, but don't worry if you deviate from this)
-        raise Exception("Not implemented yet")
+        if not self.endTag in self.cityMap.tags[state.location]: return False
+        return all(state.memory)
         # END_YOUR_CODE
 
     def successorsAndCosts(self, state: State) -> List[Tuple[str, State, float]]:
         # BEGIN_YOUR_CODE (our solution is 17 lines of code, but don't worry if you deviate from this)
-        raise Exception("Not implemented yet")
+        res = []
+        for neighbor, distance in self.cityMap.distances[state.location].items():
+            neighbor_memory = [(state.memory[i]) or (self.waypointTags[i] in self.cityMap.tags[neighbor])
+                                for i in range(len(self.waypointTags))]
+            res.append((neighbor, State(neighbor, tuple(neighbor_memory)), distance))
+        return res
         # END_YOUR_CODE
 
 
 ########################################################################################
 # Problem 2b: Custom -- Plan a Route with Unordered Waypoints through Stanford
-
 
 def getStanfordWaypointsShortestPathProblem() -> WaypointsShortestPathProblem:
     """
@@ -143,7 +146,9 @@ def getStanfordWaypointsShortestPathProblem() -> WaypointsShortestPathProblem:
     """
     cityMap = createStanfordMap()
     # BEGIN_YOUR_CODE (our solution is 4 lines of code, but don't worry if you deviate from this)
-    raise Exception("Not implemented yet")
+    startLocation = "6332417811"
+    waypointTags = ["landmark=green_library", "landmark=bookstore"]
+    endTag = 'name=Memorial Auditorium'
     # END_YOUR_CODE
     return WaypointsShortestPathProblem(startLocation, waypointTags, endTag, cityMap)
 
