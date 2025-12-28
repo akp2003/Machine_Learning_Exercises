@@ -83,7 +83,8 @@ def getStanfordShortestPathProblem() -> ShortestPathProblem:
     # cityMap = createCustomMap("data/custom.pbf", "data/custom-landmarks".json")
 
     # BEGIN_YOUR_CODE (our solution is 2 lines of code, but don't worry if you deviate from this)
-    raise Exception("Not implemented yet")
+    startLocation = '2411240427'
+    endTag = 'name=Memorial Auditorium'
     # END_YOUR_CODE
     return ShortestPathProblem(startLocation, endTag, cityMap)
 
