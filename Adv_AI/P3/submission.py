@@ -179,7 +179,40 @@ class MinimaxAgent(MultiAgentSearchAgent):
         """
 
         # BEGIN_YOUR_CODE (our solution is 22 line(s) of code, but don't worry if you deviate from this)
-        raise Exception("Not implemented yet")
+        # Extra
+        # I added a feature where you can define order for directions
+        # so you can tell it to prefer north if going south results in the same score
+        # Uncomment the following code it you want to see the magic!
+        
+        #self.Dir_order = [Directions.NORTH,Directions.WEST,Directions.SOUTH,Directions.EAST]
+        #if random.randint(0,3)==0: random.shuffle(self.Dir_order);print(self.Dir_order) # Add randomness with this line of code
+        #keyFunc = lambda x : x[0] + (self.Dir_order.index(x[1])/10)
+        
+        keyFunc = lambda x : x[0] # This does not change anything
+        # if you set the keyFunc to None then the results DO NOT match alpha beta pruning
+        # Extra
+        
+        def is_end(s,i):
+            return s.is_win() or s.is_lose() #or (len(s.get_legal_actions(i))==0)
+            
+        def V(s,d,i):
+            if is_end(s,i):
+                return (s.get_score(), None) # I assume this function will not be called at end state.
+            elif d == 0: 
+                return (self.evaluation_function(s), None)
+            elif i == 0:
+                #if d == self.depth: print(i,[(V(s.generate_successor(i,action),d,i+1)[0], action) for action in s.get_legal_actions(i)])
+                return max([(V(s.generate_successor(i,action),d,i+1)[0], action) for action in s.get_legal_actions(i)], key = keyFunc)
+            elif i == s.get_num_agents()-1:
+                #print(i,[(V(s.generate_successor(i,action),d-1,0)[0], action) for action in s.get_legal_actions(i)])
+                return min([(V(s.generate_successor(i,action),d-1,0)[0], action) for action in s.get_legal_actions(i)])
+            else:
+                #print(i,[(V(s.generate_successor(i,action),d,i+1)[0], action) for action in s.get_legal_actions(i)])
+                return min([(V(s.generate_successor(i,action),d,i+1)[0], action) for action in s.get_legal_actions(i)])
+        
+        V_score, best_move = V(game_state,self.depth,0)
+        #print(V_score, best_move)
+        return best_move
         # END_YOUR_CODE
 
 ######################################################################################
@@ -199,7 +232,55 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
         """
 
         # BEGIN_YOUR_CODE (our solution is 43 line(s) of code, but don't worry if you deviate from this)
-        raise Exception("Not implemented yet")
+        # I want to implement it in russel norvig style
+        
+        def is_end(s,i):
+            return s.is_win() or s.is_lose()
+            
+        def MinValue(s,d,i,alpha,beta):
+            pass
+
+        def MaxValue(s,d,i,alpha,beta):
+            if is_end(s,i):
+                return (s.get_score(), None) 
+            elif d == 0: 
+                return (self.evaluation_function(s), None)
+            elif i ==0:
+                v = -float('inf')
+                move = None
+                for a in s.get_legal_actions(i):
+                  (v2,a2) = MinValue(s.generate_successor(i,a),d,i+1,alpha,beta)
+                  if v2 > v :
+                      v,move = v2,a
+                      alpha = max(alpha,v)
+                  if v >= beta:
+                      return (v,move)
+                return (v,move)
+
+        def MinValue(s,d,i,alpha,beta):
+            if is_end(s,i):
+                return (s.get_score(), None) 
+            elif d == 0: 
+                return (self.evaluation_function(s), None)
+            
+            v = float('inf')
+            move = None
+            for a in s.get_legal_actions(i):
+              v2 = None
+              if i == s.get_num_agents()-1:
+                  (v2,_) = MaxValue(s.generate_successor(i,a),d-1,0,alpha,beta)
+              else:
+                  (v2,_) = MinValue(s.generate_successor(i,a),d,i+1,alpha,beta)
+              if v2 < v :
+                  v,move = v2,a
+                  beta = min(beta,v)
+              if v <= alpha:
+                  return (v,move)
+            return (v,move)
+        
+        V_score, best_move = MaxValue(game_state,self.depth,0,-float('inf'),float('inf'))
+        #print(V_score, best_move)
+        return best_move
         # END_YOUR_CODE
 
 ######################################################################################
