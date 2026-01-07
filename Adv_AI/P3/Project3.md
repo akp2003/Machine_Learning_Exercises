@@ -5,7 +5,7 @@
 
 ## 1.a
 
-$$ 
+```math
 \boxed{
 V_{\textrm{minimax}}(s,d)=\left\{\begin{array}{ll}
 
@@ -17,7 +17,7 @@ V_{\textrm{minimax}}(s,d)=\left\{\begin{array}{ll}
     \underset{a\in\textrm{Actions}(s)}{\textrm{min}}V_{\textrm{minimax}}(\textrm{Succ}(s,a),d-1) & \textrm{Player}(s)=\textrm{opp}_n
     
 \end{array}\right.} 
-$$
+```
 
 ## 1.b
 
