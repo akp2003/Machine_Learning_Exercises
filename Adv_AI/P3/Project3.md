@@ -8,14 +8,12 @@
 ```math
 \boxed{
 V_{\textrm{minimax}}(s,d)=\left\{\begin{array}{ll}
-
     \textrm{Utility}(s) & \textrm{IsEnd}(s) \\
     \textrm{Eval}(s) & d = 0 \\
     \underset{a\in\textrm{Actions}(s)}{\textrm{max}}V_{\textrm{minimax}}(\textrm{Succ}(s,a),d) & \textrm{Player}(s)=\textrm{agent} \\ 
     \underset{a\in\textrm{Actions}(s)}{\textrm{min}}V_{\textrm{minimax}}(\textrm{Succ}(s,a),d) & \textrm{Player}(s)=\textrm{opp}_1 \\
     \vdots \\
     \underset{a\in\textrm{Actions}(s)}{\textrm{min}}V_{\textrm{minimax}}(\textrm{Succ}(s,a),d-1) & \textrm{Player}(s)=\textrm{opp}_n
-    
 \end{array}\right.} 
 ```
 
@@ -93,7 +91,23 @@ sys	0m0.033s
 
 ## 3.a
 
+```math
+\boxed{
+V_{\textrm{exptmax}}(s,d)=\left\{\begin{array}{ll}
+    \textrm{Utility}(s) & \textrm{IsEnd}(s) \\
+    \textrm{Eval}(s) & d = 0 \\
+    \underset{a\in\textrm{Actions}(s)}{\textrm{max}}V_{\textrm{exptmax}}(\textrm{Succ}(s,a),d) & \textrm{Player}(s)=\textrm{agent} \\ 
+    \underset{a\in\textrm{Actions}(s)}{\sum}\pi_{\text{opp}_1}(s,a) V_{\textrm{exptmax}}(\textrm{Succ}(s,a),d) & \textrm{Player}(s)=\textrm{opp}_1 \\
+    \vdots \\
+    \underset{a\in\textrm{Actions}(s)}{\sum}\pi_{\text{opp}_n}(s,a) V_{\textrm{exptmax}}(\textrm{Succ}(s,a),d-1) & \textrm{Player}(s)=\textrm{opp}_n
+\end{array}\right.} 
+```
+
+We assume that $\pi_{opp_i}(s,a) = \frac{1}{|Actions(s)|}$.
+
 ## 3.b
+
+See the file `submission.py`.
 
 ## Problem 4
 

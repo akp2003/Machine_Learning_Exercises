@@ -301,7 +301,26 @@ class ExpectimaxAgent(MultiAgentSearchAgent):
         """
 
         # BEGIN_YOUR_CODE (our solution is 22 line(s) of code, but don't worry if you deviate from this)
-        raise Exception("Not implemented yet")
+        def is_end(s,i):
+            return s.is_win() or s.is_lose()
+            
+        def V(s,d,i):
+            if is_end(s,i):
+                return (s.get_score(), None)
+            elif d == 0: 
+                return (self.evaluation_function(s), None)
+            elif i == 0:
+                return max([(V(s.generate_successor(i,action),d,i+1)[0], action) for action in s.get_legal_actions(i)])
+            elif i == s.get_num_agents()-1:
+                policy = 1 / len(s.get_legal_actions(i))
+                return (sum([policy*V(s.generate_successor(i,action),d-1,0)[0] for action in s.get_legal_actions(i)]),None)
+            else:
+                policy = 1 / len(s.get_legal_actions(i))
+                return (sum([policy*V(s.generate_successor(i,action),d,i+1)[0] for action in s.get_legal_actions(i)]),None)
+        
+        V_score, best_move = V(game_state,self.depth,0)
+        #print(V_score, best_move)
+        return best_move
         # END_YOUR_CODE
 
 ######################################################################################
