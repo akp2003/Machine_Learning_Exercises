@@ -113,7 +113,15 @@ See the file `submission.py`.
 
 ## 4.a
 
+See the file `submission.py`.
+
 ## 4.b
+
+I tried the distance to the closest food near pacman!
+
+If you calculate the Euclidean distance you don't get any improvement but when I tried the Manhattan distance I observed a huge improvement!
+
+It wins 37 times out of 40 games!
 
 ## Problem 5
 

@@ -333,7 +333,16 @@ def better_evaluation_function(current_game_state: GameState) -> float:
     """
 
     # BEGIN_YOUR_CODE (our solution is 16 line(s) of code, but don't worry if you deviate from this)
-    raise Exception("Not implemented yet")
+    #print(dir(current_game_state))
+    dis = []
+    grid = current_game_state.get_food().as_list()
+    for loc in grid:
+        if current_game_state.has_food(*loc):
+            px,py = current_game_state.get_pacman_position()
+            # If you use Euclidean distance, you won't see much improvement!
+            dis.append(abs(px-loc[0]) + abs(py-loc[1]))
+    # print(-min(dis)- current_game_state.get_score())
+    return -min(dis) + current_game_state.get_score()
     # END_YOUR_CODE
 
 
