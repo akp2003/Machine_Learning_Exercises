@@ -119,9 +119,15 @@ See the file `submission.py`.
 
 ## 5.a
 
+The minimax agent assumes the worst-case scenario, when it gets trapped from both ways it assumes it will die anyway so it chooses the closer opponent to avoid the constant time penalty that reduces the score.
+
+The expectimax agent on the other hand assumes the opponent acts randomly so it gives a chance that the opponent might let it leave the trap, that is why our agent delays its death sometimes!
+
 ## 5.b
+
+If we remove the time penalty from the Utility function, our agent might choose to delay its death, but this might cause another problem, assume only one score is left to collect, then with no time penalty our agent might keep wandering without around that last score without any concern. Another way is to consider a survival time reward in Utility function only if the agent dies. For example let's say the penalty of death is -500, then let T be the time that the agent is in the game, we can define when our agent dies to be $\frac{-500}{T+score}$. This means if an agent dies earlier, it gets a larger penalty.
 
 ## 5.c
 
-
+Yesterday, I was watching reels on instagram and I saw a video of Jeffery Epstein and Trump, it was a cool video because of the song on that video (The song was Boss by Lil Pump) I liked the video and then instagram kept suggesting other videos on Jeffery Epstein and some weird conspiracy theory stuff. This is an example of reward hacking, the algorithm keeps suggesting the videos that you like regardless of whether or not it's intended to mislead or deceive people! It also happens in youtube shorts, it keeps suggesting AI slops all the time, and you feel exhausted after watching tons of AI shit that is not interesting!
 
